@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<settings xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.1.0 http://maven.apache.org/xsd/settings-1.1.0.xsd" xmlns="http://maven.apache.org/SETTINGS/1.1.0"
+<settings xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.1.0 http://maven.apache.org/xsd/settings-1.1.0.xsd"
+          xmlns="http://maven.apache.org/SETTINGS/1.1.0"
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <servers>
         <server>
@@ -33,7 +34,7 @@
                     <url>https://stech.jfrog.io/artifactory/libs-release</url>
                 </repository>
                 <repository>
-                    <snapshots />
+                    <snapshots/>
                     <id>snapshots</id>
                     <name>libs-snapshot</name>
                     <url>https://stech.jfrog.io/artifactory/libs-snapshot</url>
@@ -49,7 +50,7 @@
                     <url>https://stech.jfrog.io/artifactory/libs-release</url>
                 </pluginRepository>
                 <pluginRepository>
-                    <snapshots />
+                    <snapshots/>
                     <id>snapshots</id>
                     <name>libs-snapshot</name>
                     <url>https://stech.jfrog.io/artifactory/libs-snapshot</url>
