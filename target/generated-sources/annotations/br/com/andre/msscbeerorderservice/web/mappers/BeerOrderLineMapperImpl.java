@@ -1,14 +1,13 @@
 package br.com.andre.msscbeerorderservice.web.mappers;
 
 import javax.annotation.processing.Generated;
-
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 
 @Generated(
-        value = "org.mapstruct.ap.MappingProcessor",
-        date = "2020-11-02T14:43:40-0300",
-        comments = "version: 1.3.1.Final, compiler: javac, environment: Java 11.0.8 (Oracle Corporation)"
+    value = "org.mapstruct.ap.MappingProcessor",
+    date = "2020-11-08T20:11:32-0300",
+    comments = "version: 1.3.1.Final, compiler: javac, environment: Java 11.0.8 (Oracle Corporation)"
 )
 @Component
 @Primary
