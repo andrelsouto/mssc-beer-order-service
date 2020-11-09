@@ -1,26 +1,31 @@
 package br.com.andre.msscbeerorderservice.web.model;
 
-import lombok.Builder;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.*;
 
 import java.time.OffsetDateTime;
 import java.util.UUID;
 
 @Data
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = true)
-public class OrderStatusUpdate extends BaseItem {
+@AllArgsConstructor
+@Builder
+public class OrderStatusUpdate {
 
-    @Builder
-    public OrderStatusUpdate(UUID id, Integer version, OffsetDateTime createdDate, OffsetDateTime lastModifiedDate,
-                             UUID orderId, String orderStatus, String customerRef) {
-        super(id, version, createdDate, lastModifiedDate);
-        this.orderId = orderId;
-        this.orderStatus = orderStatus;
-        this.customerRef = customerRef;
-    }
+    @JsonProperty("id")
+    private UUID id = null;
+
+    @JsonProperty("version")
+    private Integer version = null;
+
+    @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss", shape = JsonFormat.Shape.STRING)
+    @JsonProperty("createdDate")
+    private OffsetDateTime createdDate = null;
+
+    @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss", shape = JsonFormat.Shape.STRING)
+    @JsonProperty("lastModifiedDate")
+    private OffsetDateTime lastModifiedDate = null;
 
     private UUID orderId;
     private String customerRef;

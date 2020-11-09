@@ -19,7 +19,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2020-11-09T06:32:31-0300",
+    date = "2020-11-09T07:02:12-0300",
     comments = "version: 1.3.1.Final, compiler: javac, environment: Java 11.0.8 (Oracle Corporation)"
 )
 @Component
@@ -45,12 +45,12 @@ public class BeerOrderMapperImpl implements BeerOrderMapper {
         }
         beerOrderDto.createdDate( dateMapper.asOffsetDateTime( beerOrder.getCreatedDate() ) );
         beerOrderDto.lastModifiedDate( dateMapper.asOffsetDateTime( beerOrder.getLastModifiedDate() ) );
+        beerOrderDto.customerRef( beerOrder.getCustomerRef() );
         beerOrderDto.beerOrderLines( beerOrderLineSetToBeerOrderLineDtoList( beerOrder.getBeerOrderLines() ) );
         if ( beerOrder.getOrderStatus() != null ) {
             beerOrderDto.orderStatus( beerOrder.getOrderStatus().name() );
         }
         beerOrderDto.orderStatusCallbackUrl( beerOrder.getOrderStatusCallbackUrl() );
-        beerOrderDto.customerRef( beerOrder.getCustomerRef() );
 
         return beerOrderDto.build();
     }
