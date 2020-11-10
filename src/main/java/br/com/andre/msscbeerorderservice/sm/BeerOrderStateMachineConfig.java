@@ -2,7 +2,7 @@ package br.com.andre.msscbeerorderservice.sm;
 
 import br.com.andre.msscbeerorderservice.domain.BeerOrderEventEnum;
 import br.com.andre.msscbeerorderservice.domain.BeerOrderStatusEnum;
-import br.com.andre.msscbeerorderservice.sm.actions.ValidadeBeerOrderAction;
+import br.com.andre.msscbeerorderservice.sm.actions.ValidateBeerOrderAction;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.statemachine.config.EnableStateMachineFactory;
@@ -17,7 +17,7 @@ import java.util.EnumSet;
 @EnableStateMachineFactory
 public class BeerOrderStateMachineConfig extends StateMachineConfigurerAdapter<BeerOrderStatusEnum, BeerOrderEventEnum> {
 
-    private final ValidadeBeerOrderAction validadeBeerOrderAction;
+    private final ValidateBeerOrderAction validateBeerOrderAction;
 
     @Override
     public void configure(StateMachineStateConfigurer<BeerOrderStatusEnum, BeerOrderEventEnum> states) throws Exception {
@@ -36,7 +36,7 @@ public class BeerOrderStateMachineConfig extends StateMachineConfigurerAdapter<B
         transitions.withExternal()
                 .source(BeerOrderStatusEnum.NEW).target(BeerOrderStatusEnum.VALIDATION_PENDING)
                 .event(BeerOrderEventEnum.VALIDATE_ORDER)
-                .action(validadeBeerOrderAction)
+                .action(validateBeerOrderAction)
             .and().withExternal()
                 .source(BeerOrderStatusEnum.NEW).target(BeerOrderStatusEnum.VALIDATED)
                 .event(BeerOrderEventEnum.VALIDATION_PASSED)

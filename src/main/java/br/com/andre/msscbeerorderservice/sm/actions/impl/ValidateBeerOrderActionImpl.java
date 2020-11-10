@@ -6,7 +6,7 @@ import br.com.andre.msscbeerorderservice.domain.BeerOrderEventEnum;
 import br.com.andre.msscbeerorderservice.domain.BeerOrderStatusEnum;
 import br.com.andre.msscbeerorderservice.repositories.BeerOrderRepository;
 import br.com.andre.msscbeerorderservice.services.BeerOrderManagerImpl;
-import br.com.andre.msscbeerorderservice.sm.actions.ValidadeBeerOrderAction;
+import br.com.andre.msscbeerorderservice.sm.actions.ValidateBeerOrderAction;
 import br.com.andre.msscbeerorderservice.web.mappers.BeerOrderMapper;
 import br.com.andre.msscbeerorderservice.web.model.events.ValidateOrderRequest;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +20,7 @@ import java.util.UUID;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class ValidateBeerOrderActionImpl implements ValidadeBeerOrderAction {
+public class ValidateBeerOrderActionImpl implements ValidateBeerOrderAction {
 
     private final BeerOrderRepository beerOrderRepository;
     private final BeerOrderMapper beerOrderMapper;

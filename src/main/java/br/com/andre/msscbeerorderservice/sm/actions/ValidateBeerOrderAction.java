@@ -4,5 +4,5 @@ import br.com.andre.msscbeerorderservice.domain.BeerOrderEventEnum;
 import br.com.andre.msscbeerorderservice.domain.BeerOrderStatusEnum;
 import org.springframework.statemachine.action.Action;
 
-public interface ValidadeBeerOrderAction extends Action<BeerOrderStatusEnum, BeerOrderEventEnum> {
+public interface ValidateBeerOrderAction extends Action<BeerOrderStatusEnum, BeerOrderEventEnum> {
 }
