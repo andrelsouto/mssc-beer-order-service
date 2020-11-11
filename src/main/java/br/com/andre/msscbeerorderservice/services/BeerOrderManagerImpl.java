@@ -44,7 +44,15 @@ public class BeerOrderManagerImpl implements BeerOrderManager {
         final BeerOrder beerOrder = beerOrderRepository.findOneById(beerOrderId);
         StateMachine<BeerOrderStatusEnum, BeerOrderEventEnum> sm = build(beerOrder);
 
-        sendBeerOrderEvent(beerOrder, isValid ? BeerOrderEventEnum.VALIDATION_PASSED : BeerOrderEventEnum.VALIDATION_FAILED);
+        if (isValid) {
+            sendBeerOrderEvent(beerOrder, BeerOrderEventEnum.VALIDATION_PASSED);
+
+            BeerOrder validatedOrder = beerOrderRepository.findOneById(beerOrderId);
+
+            sendBeerOrderEvent(validatedOrder, BeerOrderEventEnum.ALLOCATE_ORDER);
+        } else {
+            sendBeerOrderEvent(beerOrder, BeerOrderEventEnum.VALIDATION_FAILED);
+        }
     }
 
     private void sendBeerOrderEvent(BeerOrder beerOrder, BeerOrderEventEnum eventEnum) {

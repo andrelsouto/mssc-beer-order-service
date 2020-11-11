@@ -1,5 +1,6 @@
 package br.com.andre.msscbeerorderservice.config;
 
+import br.com.andre.msscbeerorderservice.web.model.events.AllocateOrderRequest;
 import br.com.andre.msscbeerorderservice.web.model.events.ValidateOrderRequest;
 import br.com.andre.msscbeerorderservice.web.model.events.ValidateOrderResult;
 import org.springframework.context.annotation.Bean;
@@ -16,6 +17,7 @@ public class JmsConfig {
 
     public static final String VALIDATE_ORDER_QUEUE = "validate-order";
     public static final String VALIDATE_ORDER_RESPONSE_QUEUE = "validate-order-response";
+    public static final String ALLOCATE_ORDER_QUEUE = "allocate-order";
 
     @Bean
     public MessageConverter jacksonJmsConverter() {
@@ -24,6 +26,7 @@ public class JmsConfig {
         Map<String, Class<?>> typeIdMappings = new HashMap<String, Class<?>>();
         typeIdMappings.put("JMS_VALIDATE_REQUEST", ValidateOrderRequest.class);
         typeIdMappings.put("JMS_VALIDATE_RESPONSE", ValidateOrderResult.class);
+        typeIdMappings.put("JMS_ALLOCATE_ORDER_REQUEST", AllocateOrderRequest.class);
         converter.setTypeIdPropertyName("_type");
         converter.setTypeIdMappings(typeIdMappings);
         return converter;
