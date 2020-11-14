@@ -37,4 +37,13 @@ public class BeerOrderLineDto {
     private UUID beerId;
     private Integer orderQuantity = 0;
     private BigDecimal price;
+    private Integer quantityAllocated;
+
+    public Integer getQuantityAllocated() {
+        return quantityAllocated;
+    }
+
+    public void setQuantityAllocated(Integer quantityAllocated) {
+        this.quantityAllocated = quantityAllocated;
+    }
 }
