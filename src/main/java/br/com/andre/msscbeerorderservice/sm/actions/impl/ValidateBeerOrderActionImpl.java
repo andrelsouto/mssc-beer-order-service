@@ -31,7 +31,7 @@ public class ValidateBeerOrderActionImpl implements ValidateBeerOrderAction {
         BeerOrder order = beerOrderRepository.findOneById(
                 UUID.fromString((String) stateContext.getMessage().getHeaders().get(BeerOrderManagerImpl.ORDER_ID_HEADER)));
 
-        jmsTemplate.convertAndSend(JmsConfig.VALIDATE_ORDER_QUEUE, ValidateOrderRequest.builder()
+                jmsTemplate.convertAndSend(JmsConfig.VALIDATE_ORDER_QUEUE, ValidateOrderRequest.builder()
                     .beerOrder(beerOrderMapper.beerOrderToDto(order))
                     .build());
 
