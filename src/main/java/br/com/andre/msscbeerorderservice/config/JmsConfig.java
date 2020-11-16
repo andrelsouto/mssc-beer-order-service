@@ -4,6 +4,7 @@ import br.com.andre.msscbeerorderservice.web.model.events.AllocateOrderRequest;
 import br.com.andre.msscbeerorderservice.web.model.events.AllocateOrderResult;
 import br.com.andre.msscbeerorderservice.web.model.events.ValidateOrderRequest;
 import br.com.andre.msscbeerorderservice.web.model.events.ValidateOrderResult;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jms.support.converter.MappingJackson2MessageConverter;
@@ -22,7 +23,7 @@ public class JmsConfig {
     public static final String ALLOCATE_ORDER_RESPONSE_QUEUE = "allocate-order-response";
 
     @Bean
-    public MessageConverter jacksonJmsConverter() {
+    public MessageConverter jacksonJmsConverter(ObjectMapper objectMapper) {
         MappingJackson2MessageConverter converter = new MappingJackson2MessageConverter();
         converter.setTargetType(MessageType.TEXT);
         Map<String, Class<?>> typeIdMappings = new HashMap<String, Class<?>>();
@@ -32,6 +33,7 @@ public class JmsConfig {
         typeIdMappings.put("JMS_ALLOCATE_ORDER_RESPONSE", AllocateOrderResult.class);
         converter.setTypeIdPropertyName("_type");
         converter.setTypeIdMappings(typeIdMappings);
+        converter.setObjectMapper(objectMapper);
         return converter;
     }
 
