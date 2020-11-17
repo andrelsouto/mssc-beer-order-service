@@ -88,17 +88,13 @@ public class BeerOrderManagerImplIT {
 
         BeerOrder savedBeerOrder = beerOrderManager.newBeerOrder(beerOrder);
 
+        assertNotNull(savedBeerOrder);
         await().untilAsserted(() -> {
             BeerOrder beerOrderFound = beerOrderRepository.findById(beerOrder.getId()).get();
 
             // TODO: ALLOCATED STATUS
-            assertEquals(BeerOrderStatusEnum.ALLOCATION_PENDING, beerOrderFound.getOrderStatus());
+            assertEquals(BeerOrderStatusEnum.ALLOCATED, beerOrderFound.getOrderStatus());
         });
-
-        BeerOrder savedBeerOrder2 = beerOrderRepository.findById(savedBeerOrder.getId()).get();
-
-        assertNotNull(savedBeerOrder);
-//        assertEquals(BeerOrderStatusEnum.ALLOCATED, savedBeerOrder2.getOrderStatus());
 
     }
 

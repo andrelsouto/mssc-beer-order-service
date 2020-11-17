@@ -8,6 +8,7 @@ import br.com.andre.msscbeerorderservice.repositories.BeerOrderRepository;
 import br.com.andre.msscbeerorderservice.services.BeerOrderManagerImpl;
 import br.com.andre.msscbeerorderservice.sm.actions.AllocationOrderAction;
 import br.com.andre.msscbeerorderservice.web.mappers.BeerOrderMapper;
+import br.com.andre.msscbeerorderservice.web.model.events.AllocateOrderRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jms.core.JmsTemplate;
@@ -34,7 +35,8 @@ public class AllocationOrderActionImpl implements AllocationOrderAction {
 
         beerOrderOptional.ifPresentOrElse(beerOrder -> {
 
-            jmsTemplate.convertAndSend(JmsConfig.ALLOCATE_ORDER_QUEUE, beerOrderMapper.beerOrderToDto(beerOrder));
+            jmsTemplate.convertAndSend(JmsConfig.ALLOCATE_ORDER_QUEUE,
+                    AllocateOrderRequest.builder().beerOrderDto(beerOrderMapper.beerOrderToDto(beerOrder)).build());
 
             log.debug("Sent Allocation Request for order id: " + beerOrderId);
         }, () -> log.error("Beer Order Not Found Id: " + stateContext.getMessage().getHeaders().get(BeerOrderManagerImpl.ORDER_ID_HEADER)));
