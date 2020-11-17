@@ -21,6 +21,7 @@ import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 
@@ -92,10 +93,43 @@ public class BeerOrderManagerImplIT {
         await().untilAsserted(() -> {
             BeerOrder beerOrderFound = beerOrderRepository.findById(beerOrder.getId()).get();
 
-            // TODO: ALLOCATED STATUS
             assertEquals(BeerOrderStatusEnum.ALLOCATED, beerOrderFound.getOrderStatus());
         });
 
+    }
+
+    @Test
+    void testNewToPickedUp() throws JsonProcessingException {
+        BeerDto beerDto = BeerDto.builder()
+                .id(beerId)
+                .upc("12345")
+                .build();
+
+        wireMockServer.stubFor(get(BeerServiceRestTemplateImpl.BEER_UPC_PATH_V1 + "12345")
+                .willReturn(okJson(objectMapper.writeValueAsString(beerDto))));
+
+        BeerOrder beerOrder = createOrder();
+
+        BeerOrder savedBeerOrder = beerOrderManager.newBeerOrder(beerOrder);
+
+        assertNotNull(savedBeerOrder);
+        await().untilAsserted(() -> {
+            BeerOrder beerOrderFound = beerOrderRepository.findById(beerOrder.getId()).get();
+
+            assertEquals(BeerOrderStatusEnum.ALLOCATED, beerOrderFound.getOrderStatus());
+        });
+
+        beerOrderManager.beerOrderPickedUp(savedBeerOrder.getId());
+
+        await().untilAsserted(() -> {
+            BeerOrder beerOrderFound = beerOrderRepository.findById(beerOrder.getId()).get();
+
+            assertEquals(BeerOrderStatusEnum.PICKED_UP, beerOrderFound.getOrderStatus());
+        });
+
+        BeerOrder pickedUpOrder = beerOrderRepository.findById(savedBeerOrder.getId()).get();
+
+        assertEquals(BeerOrderStatusEnum.PICKED_UP, pickedUpOrder.getOrderStatus());
     }
 
     public BeerOrder createOrder() {
