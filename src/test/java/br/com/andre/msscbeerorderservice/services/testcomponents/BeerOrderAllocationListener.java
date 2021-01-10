@@ -8,8 +8,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.messaging.Message;
-import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Component;
+
+import java.util.Optional;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -22,14 +24,30 @@ public class BeerOrderAllocationListener {
     public void  listen(Message message) {
 
         AllocateOrderRequest orderRequest = (AllocateOrderRequest) message.getPayload();
+        AtomicBoolean pendingInventory = new AtomicBoolean(false);
+        AtomicBoolean allocationError = new AtomicBoolean(false);
+
+        if (orderRequest.getBeerOrderDto().getCustomerRef() != null && orderRequest.getBeerOrderDto().getCustomerRef().equals("fail-allocation")) {
+            allocationError.set(true);
+        }
+
+        if (orderRequest.getBeerOrderDto().getCustomerRef() != null && orderRequest.getBeerOrderDto().getCustomerRef().equals("partial-allocation")) {
+            pendingInventory.set(true);
+        }
 
         orderRequest.getBeerOrderDto().getBeerOrderLines()
-                .forEach(beerOrderLineDto -> beerOrderLineDto.setQuantityAllocated(beerOrderLineDto.getOrderQuantity()));
+                .forEach(beerOrderLineDto -> {
+                    if (pendingInventory.get()) {
+                        beerOrderLineDto.setQuantityAllocated(beerOrderLineDto.getOrderQuantity() - 1);
+                    } else {
+                        beerOrderLineDto.setQuantityAllocated(beerOrderLineDto.getOrderQuantity());
+                    }
+                });
 
         AllocateOrderResult orderResult = AllocateOrderResult.builder()
                 .beerOrderDto(orderRequest.getBeerOrderDto())
-                .allocationError(false)
-                .pendingInventory(false)
+                .allocationError(allocationError.get())
+                .pendingInventory(pendingInventory.get())
                 .build();
 
         jmsTemplate.convertAndSend(JmsConfig.ALLOCATE_ORDER_RESPONSE_QUEUE, orderResult);
