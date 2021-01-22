@@ -19,6 +19,7 @@ public class JmsConfig {
     public static final String ALLOCATE_ORDER_QUEUE = "allocate-order";
     public static final String ALLOCATE_ORDER_RESPONSE_QUEUE = "allocate-order-response";
     public static final String ALLOCATE_FAILURE_QUEUE = "allocation-failure";
+    public static final String DEALLOCATE_ORDER_QUEUE = "deallocate-order";
 
     @Bean
     public MessageConverter jacksonJmsConverter(ObjectMapper objectMapper) {
@@ -30,6 +31,7 @@ public class JmsConfig {
         typeIdMappings.put("JMS_ALLOCATE_ORDER_REQUEST", AllocateOrderRequest.class);
         typeIdMappings.put("JMS_ALLOCATE_ORDER_RESPONSE", AllocateOrderResult.class);
         typeIdMappings.put("JMS_ALLOCATION_FAILURE_EVENT", AllocationFailureEvent.class);
+        typeIdMappings.put("JMS_DEALLOCATE_FAILURE_EVENT", DeallocateOrderRequest.class);
         converter.setTypeIdPropertyName("_type");
         converter.setTypeIdMappings(typeIdMappings);
         converter.setObjectMapper(objectMapper);

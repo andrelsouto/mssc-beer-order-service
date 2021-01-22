@@ -4,6 +4,7 @@ import br.com.andre.msscbeerorderservice.domain.BeerOrderEventEnum;
 import br.com.andre.msscbeerorderservice.domain.BeerOrderStatusEnum;
 import br.com.andre.msscbeerorderservice.sm.actions.AllocationFailureAction;
 import br.com.andre.msscbeerorderservice.sm.actions.AllocationOrderAction;
+import br.com.andre.msscbeerorderservice.sm.actions.DeallocateOrderAction;
 import br.com.andre.msscbeerorderservice.sm.actions.ValidateBeerOrderAction;
 import br.com.andre.msscbeerorderservice.sm.actions.ValidationFailureAction;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +25,7 @@ public class BeerOrderStateMachineConfig extends StateMachineConfigurerAdapter<B
     private final AllocationOrderAction allocationOrderAction;
     private final ValidationFailureAction validationFailureAction;
     private final AllocationFailureAction allocationFailureAction;
+    private final DeallocateOrderAction deallocationOrderAction;
 
     @Override
     public void configure(StateMachineStateConfigurer<BeerOrderStatusEnum, BeerOrderEventEnum> states) throws Exception {
@@ -79,7 +81,7 @@ public class BeerOrderStateMachineConfig extends StateMachineConfigurerAdapter<B
                 .event(BeerOrderEventEnum.BEER_ORDER_PICKED_UP)
             .and().withExternal()
                 .source(BeerOrderStatusEnum.ALLOCATED).target(BeerOrderStatusEnum.CANCELLED)
-                .event(BeerOrderEventEnum.CANCEL_ORDER);
-            //TODO: add action
+                .event(BeerOrderEventEnum.CANCEL_ORDER)
+                .action(deallocationOrderAction);
     }
 }
