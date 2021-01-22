@@ -1,9 +1,6 @@
 package br.com.andre.msscbeerorderservice.config;
 
-import br.com.andre.msscbeerorderservice.web.model.events.AllocateOrderRequest;
-import br.com.andre.msscbeerorderservice.web.model.events.AllocateOrderResult;
-import br.com.andre.msscbeerorderservice.web.model.events.ValidateOrderRequest;
-import br.com.andre.msscbeerorderservice.web.model.events.ValidateOrderResult;
+import br.com.andre.msscbeerorderservice.web.model.events.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,6 +18,7 @@ public class JmsConfig {
     public static final String VALIDATE_ORDER_RESPONSE_QUEUE = "validate-order-response";
     public static final String ALLOCATE_ORDER_QUEUE = "allocate-order";
     public static final String ALLOCATE_ORDER_RESPONSE_QUEUE = "allocate-order-response";
+    public static final String ALLOCATE_FAILURE_QUEUE = "allocation-failure";
 
     @Bean
     public MessageConverter jacksonJmsConverter(ObjectMapper objectMapper) {
@@ -31,6 +29,7 @@ public class JmsConfig {
         typeIdMappings.put("JMS_VALIDATE_RESPONSE", ValidateOrderResult.class);
         typeIdMappings.put("JMS_ALLOCATE_ORDER_REQUEST", AllocateOrderRequest.class);
         typeIdMappings.put("JMS_ALLOCATE_ORDER_RESPONSE", AllocateOrderResult.class);
+        typeIdMappings.put("JMS_ALLOCATION_FAILURE_EVENT", AllocationFailureEvent.class);
         converter.setTypeIdPropertyName("_type");
         converter.setTypeIdMappings(typeIdMappings);
         converter.setObjectMapper(objectMapper);

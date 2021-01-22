@@ -2,6 +2,7 @@ package br.com.andre.msscbeerorderservice.sm;
 
 import br.com.andre.msscbeerorderservice.domain.BeerOrderEventEnum;
 import br.com.andre.msscbeerorderservice.domain.BeerOrderStatusEnum;
+import br.com.andre.msscbeerorderservice.sm.actions.AllocationFailureAction;
 import br.com.andre.msscbeerorderservice.sm.actions.AllocationOrderAction;
 import br.com.andre.msscbeerorderservice.sm.actions.ValidateBeerOrderAction;
 import br.com.andre.msscbeerorderservice.sm.actions.ValidationFailureAction;
@@ -22,6 +23,7 @@ public class BeerOrderStateMachineConfig extends StateMachineConfigurerAdapter<B
     private final ValidateBeerOrderAction validateBeerOrderAction;
     private final AllocationOrderAction allocationOrderAction;
     private final ValidationFailureAction validationFailureAction;
+    private final AllocationFailureAction allocationFailureAction;
 
     @Override
     public void configure(StateMachineStateConfigurer<BeerOrderStatusEnum, BeerOrderEventEnum> states) throws Exception {
@@ -58,6 +60,7 @@ public class BeerOrderStateMachineConfig extends StateMachineConfigurerAdapter<B
             .and().withExternal()
                 .source(BeerOrderStatusEnum.ALLOCATION_PENDING).target(BeerOrderStatusEnum.ALLOCATION_EXCEPTION)
                 .event(BeerOrderEventEnum.ALLOCATION_FAILED)
+                .action(allocationFailureAction)
             .and().withExternal()
                 .source(BeerOrderStatusEnum.ALLOCATION_PENDING).target(BeerOrderStatusEnum.PENDING_INVENTORY)
                 .event(BeerOrderEventEnum.ALLOCATION_NO_INVENTORY)
