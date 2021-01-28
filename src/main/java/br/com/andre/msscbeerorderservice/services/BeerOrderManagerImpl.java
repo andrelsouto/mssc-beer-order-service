@@ -28,7 +28,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class BeerOrderManagerImpl implements BeerOrderManager {
 
     public static final String ORDER_ID_HEADER = "ORDER_ID_HEADER";
-    
+
     private final StateMachineFactory<BeerOrderStatusEnum, BeerOrderEventEnum> stateMachineFactory;
     private final BeerOrderRepository beerOrderRepository;
     private final BeerOrderStateChangeInterceptor beerOrderStateChangeInterceptor;
@@ -83,7 +83,7 @@ public class BeerOrderManagerImpl implements BeerOrderManager {
     public void beerOrderAllocationPendingInventory(BeerOrderDto beerOrderDto) {
         Optional<BeerOrder> beerOrderOptional = beerOrderRepository.findById(beerOrderDto.getId());
 
-        beerOrderOptional.ifPresentOrElse(beerOrder ->  {
+        beerOrderOptional.ifPresentOrElse(beerOrder -> {
             sendBeerOrderEvent(beerOrder, BeerOrderEventEnum.ALLOCATION_NO_INVENTORY);
             awaitForStatus(beerOrder.getId(), BeerOrderStatusEnum.PENDING_INVENTORY);
             updateAllocatedQty(beerOrderDto);
@@ -167,13 +167,13 @@ public class BeerOrderManagerImpl implements BeerOrderManager {
             }, () -> log.debug("Order Id Not Found"));
 
             if (!found.get()) {
-                    Thread.sleep(1000);
+                Thread.sleep(1000);
             }
         }
     }
 
     private StateMachine<BeerOrderStatusEnum, BeerOrderEventEnum> build(BeerOrder beerOrder) {
-        StateMachine<BeerOrderStatusEnum, BeerOrderEventEnum> sm  = stateMachineFactory.getStateMachine(beerOrder.getId());
+        StateMachine<BeerOrderStatusEnum, BeerOrderEventEnum> sm = stateMachineFactory.getStateMachine(beerOrder.getId());
 
         sm.stop();
 
@@ -184,6 +184,6 @@ public class BeerOrderManagerImpl implements BeerOrderManager {
                 });
         sm.start();
         return sm;
-        }
+    }
 
 }

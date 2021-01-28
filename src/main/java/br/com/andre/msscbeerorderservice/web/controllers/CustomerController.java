@@ -25,7 +25,7 @@ public class CustomerController {
     private final CustomerService customerService;
 
     @GetMapping
-    public ResponseEntity<CustomerPagedList> listCustomers(@RequestParam (value = "pageNumber", required = false, defaultValue = DEFAULT_PAGE_NUMBER) Integer pageNumber,
+    public ResponseEntity<CustomerPagedList> listCustomers(@RequestParam(value = "pageNumber", required = false, defaultValue = DEFAULT_PAGE_NUMBER) Integer pageNumber,
                                                            @RequestParam(value = "pageSize", required = false, defaultValue = DEFAULT_PAGE_SIZE) Integer pageSize) {
 
         return ResponseEntity.ok(customerService.listCustomers(PageRequest.of(pageNumber, pageSize)));

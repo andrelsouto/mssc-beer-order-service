@@ -35,8 +35,8 @@ public class ValidateBeerOrderActionImpl implements ValidateBeerOrderAction {
         orderOptional.ifPresentOrElse(beerOrder -> {
 
             jmsTemplate.convertAndSend(JmsConfig.VALIDATE_ORDER_QUEUE, ValidateOrderRequest.builder()
-                .beerOrder(beerOrderMapper.beerOrderToDto(beerOrder))
-                .build());
+                    .beerOrder(beerOrderMapper.beerOrderToDto(beerOrder))
+                    .build());
 
             log.debug("Sent Validation request to queue for order id: " + beerOrder.getId());
         }, () -> log.error("Beer Order Not Found. Id: " + stateContext.getMessage().getHeaders().get(BeerOrderManagerImpl.ORDER_ID_HEADER)));

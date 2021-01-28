@@ -79,9 +79,9 @@ public class BeerOrderManagerImplIT {
     @BeforeEach
     void setUp() {
         testCustomer = customerRepository.save(Customer
-            .builder()
-            .customerName("Test Customer")
-            .build());
+                .builder()
+                .customerName("Test Customer")
+                .build());
     }
 
     @Test
@@ -92,7 +92,7 @@ public class BeerOrderManagerImplIT {
                 .build();
 
         wireMockServer.stubFor(get(BeerServiceRestTemplateImpl.BEER_UPC_PATH_V1 + "12345")
-            .willReturn(okJson(objectMapper.writeValueAsString(beerDto))));
+                .willReturn(okJson(objectMapper.writeValueAsString(beerDto))));
 
         BeerOrder beerOrder = createOrder();
 
@@ -324,10 +324,10 @@ public class BeerOrderManagerImplIT {
         Set<BeerOrderLine> lines = new HashSet<>();
 
         lines.add(BeerOrderLine.builder()
-            .beerId(beerId)
-            .upc("12345")
-            .orderQuantity(1)
-            .beerOrder(beerOrder).build());
+                .beerId(beerId)
+                .upc("12345")
+                .orderQuantity(1)
+                .beerOrder(beerOrder).build());
 
         beerOrder.setBeerOrderLines(lines);
 

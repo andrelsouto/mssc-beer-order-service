@@ -30,9 +30,9 @@ public class CustomerServiceImpl implements CustomerService {
         Page<Customer> customerPage = customerRepository.findAll(pageable);
 
         return new CustomerPagedList(customerPage
-        .stream()
-        .map(customerMapper::customerToCustomerDto)
-        .collect(Collectors.toList()), PageRequest.of(
+                .stream()
+                .map(customerMapper::customerToCustomerDto)
+                .collect(Collectors.toList()), PageRequest.of(
                 customerPage.getPageable().getPageNumber(),
                 customerPage.getPageable().getPageSize()),
                 customerPage.getTotalElements()

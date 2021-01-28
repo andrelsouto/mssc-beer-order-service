@@ -21,7 +21,7 @@ public class BeerOrderAllocationListener {
     private final JmsTemplate jmsTemplate;
 
     @JmsListener(destination = JmsConfig.ALLOCATE_ORDER_QUEUE)
-    public void  listen(Message message) {
+    public void listen(Message message) {
 
         AllocateOrderRequest orderRequest = (AllocateOrderRequest) message.getPayload();
         AtomicBoolean pendingInventory = new AtomicBoolean(false);

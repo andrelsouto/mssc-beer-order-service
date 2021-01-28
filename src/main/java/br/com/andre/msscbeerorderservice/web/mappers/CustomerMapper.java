@@ -5,7 +5,7 @@ import br.com.andre.msscbeerorderservice.web.model.CustomerDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper(uses = { DateMapper.class })
+@Mapper(uses = {DateMapper.class})
 public interface CustomerMapper {
 
     @Mapping(source = "customerName", target = "name")
