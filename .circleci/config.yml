@@ -7,4 +7,5 @@ workflows:
   maven_test:
     jobs:
       - maven/test: # checkout, build, test, and upload test results
+          context: maven_credentials
           settings_file: .circleci.settings.xml

@@ -1,27 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<settings xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.1.0 http://maven.apache.org/xsd/settings-1.1.0.xsd"
-          xmlns="http://maven.apache.org/SETTINGS/1.1.0"
+<settings xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.1.0 http://maven.apache.org/xsd/settings-1.1.0.xsd" xmlns="http://maven.apache.org/SETTINGS/1.1.0"
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <servers>
         <server>
-            <username>${env.USER_NAME}</username>
-            <password>${env.USER_PASSWORD}</password>
+            <username>${USER_NAME}</username>
+            <password>${USER_PASSWORD}</password>
             <id>central</id>
         </server>
         <server>
-            <username>${env.USER_NAME}</username>
-            <password>${env.USER_PASSWORD}</password>
+            <username>${USER_NAME}</username>
+            <password>${USER_PASSWORD}</password>
             <id>snapshots</id>
         </server>
     </servers>
-    <mirrors>
-        <mirror>
-            <id>central</id>
-            <name>central</name>
-            <url>https://stech.jfrog.io/artifactory/jfrog-repo/</url>
-            <mirrorOf>*</mirrorOf>
-        </mirror>
-    </mirrors>
     <profiles>
         <profile>
             <repositories>
@@ -30,14 +21,14 @@
                         <enabled>false</enabled>
                     </snapshots>
                     <id>central</id>
-                    <name>libs-release</name>
-                    <url>https://stech.jfrog.io/artifactory/libs-release</url>
+                    <name>stec-maven-repo</name>
+                    <url>https://stec.jfrog.io/artifactory/stec-maven-repo</url>
                 </repository>
                 <repository>
-                    <snapshots/>
+                    <snapshots />
                     <id>snapshots</id>
-                    <name>libs-snapshot</name>
-                    <url>https://stech.jfrog.io/artifactory/libs-snapshot</url>
+                    <name>stec-maven-repo</name>
+                    <url>https://stec.jfrog.io/artifactory/stec-maven-repo</url>
                 </repository>
             </repositories>
             <pluginRepositories>
@@ -46,14 +37,14 @@
                         <enabled>false</enabled>
                     </snapshots>
                     <id>central</id>
-                    <name>libs-release</name>
-                    <url>https://stech.jfrog.io/artifactory/libs-release</url>
+                    <name>stec-maven-repo</name>
+                    <url>https://stec.jfrog.io/artifactory/stec-maven-repo</url>
                 </pluginRepository>
                 <pluginRepository>
-                    <snapshots/>
+                    <snapshots />
                     <id>snapshots</id>
-                    <name>libs-snapshot</name>
-                    <url>https://stech.jfrog.io/artifactory/libs-snapshot</url>
+                    <name>stec-maven-repo</name>
+                    <url>https://stec.jfrog.io/artifactory/stec-maven-repo</url>
                 </pluginRepository>
             </pluginRepositories>
             <id>artifactory</id>
