@@ -6,7 +6,7 @@
     <parent>
         <groupId>br.com.andre</groupId>
         <artifactId>mssc-brewery-bom</artifactId>
-        <version>1.3-SNAPSHOT</version>
+        <version>1.4-SNAPSHOT</version>
     </parent>
 
     <groupId>br.com.andre</groupId>
