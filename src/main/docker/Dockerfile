@@ -1,4 +1,4 @@
-FROM openjdk:11-jre-slim as builder
+FROM stec.jfrog.io/beerworks/openjdk:11-jre-slim as builder
 WORKDIR application
 ADD maven/${project.build.finalName}.jar ${project.build.finalName}.jar
 RUN java -Djarmode=layertools -jar ${project.build.finalName}.jar extract
